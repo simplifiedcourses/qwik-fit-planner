@@ -1,0 +1,19 @@
+{
+  "exercises": [
+    {
+      "name": "Bench press",
+      "description": "The bench press, or chest press, is a weight training exercise in which the trainee presses a weight upwards while lying on a weight training bench",
+      "id": 2
+    },
+    {
+      "name": "Squat",
+      "description": "A squat is a strength exercise in which the trainee lowers their hips from a standing position and then stands back up. During the descent of a squat, the hip and knee joints flex while the ankle joint dorsiflexes; conversely the hip and knee joints extend and the ankle joint plantarflexes when standing up.",
+      "id": 4
+    },
+    {
+      "name": "Push-up",
+      "description": "The push-up is a common calisthenics exercise beginning from the prone position. By raising and lowering the body using the arms, push-ups exercise the pectoral muscles, triceps, and anterior deltoids, ...",
+      "id": 8
+    }
+  ]
+}
