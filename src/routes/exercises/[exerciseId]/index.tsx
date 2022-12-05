@@ -22,6 +22,11 @@ type State = {
     data: Exercise
 }
 
+export const onGet:RequestHandler = ({params}) => {
+    return getExercise(params.exerciseId)
+}
+
+
 export default component$(() => {
     const location = useLocation();
     const nav = useNavigate();
@@ -32,42 +37,41 @@ export default component$(() => {
         }
 
     }, {recursive: true});
-    useMount$(async () => {
-        const resp = await getExercise(Number(location.params.exerciseId))
-        state.data = resp;
-    })
+    const endPoint = useEndpoint<typeof onGet>();
     return (
-        <>
-            <div class="flex justify-between">
-                <h1 className="text-4xl">
-                    Edit Exercise
-                    {state.data.name && <span>: {state.data.name}</span>}
-                </h1>
-                <Button onClick$={() => remove(Number(location.params.exerciseId), nav)}>Delete</Button>
-            </div>
-            <form>
-                <div className="mb-6">
-                    <FormInputWrapper>
-                        <Label for="name">
-                            Name
-                        </Label>
-                        <InputText id="name" required
-                                   onInput$={(e) => state.data.name = (e?.target as HTMLInputElement)?.value}
-                                   placeholder="Enter the name" value={state.data.name}/>
-                    </FormInputWrapper>
-                    <FormInputWrapper>
-                        <Label for="description">
-                            Description
-                        </Label>
-                        <Textarea id="description" required
-                                  value={state.data.description}
-                                  onInput$={(e) => state.data.description = (e?.target as HTMLTextAreaElement)?.value}
-                                  placeholder="Enter the description"></Textarea>
-                    </FormInputWrapper>
+        <Resource value={endpoint} onResultEquals={(state) => 
+            <>
+                <div class="flex justify-between">
+                    <h1 className="text-4xl">
+                        Edit Exercise
+                        {state.data.name && <span>: {state.data.name}</span>}
+                    </h1>
+                    <Button onClick$={() => remove(Number(location.params.exerciseId), nav)}>Delete</Button>
                 </div>
-                <Button preventdefault:click onClick$={() => save(state.data, nav)}>Save</Button>
-            </form>
-        </>
+                <form>
+                    <div className="mb-6">
+                        <FormInputWrapper>
+                            <Label for="name">
+                                Name
+                            </Label>
+                            <InputText id="name" required
+                                    onInput$={(e) => state.data.name = (e?.target as HTMLInputElement)?.value}
+                                    placeholder="Enter the name" value={state.data.name}/>
+                        </FormInputWrapper>
+                        <FormInputWrapper>
+                            <Label for="description">
+                                Description
+                            </Label>
+                            <Textarea id="description" required
+                                    value={state.data.description}
+                                    onInput$={(e) => state.data.description = (e?.target as HTMLTextAreaElement)?.value}
+                                    placeholder="Enter the description"></Textarea>
+                        </FormInputWrapper>
+                    </div>
+                    <Button preventdefault:click onClick$={() => save(state.data, nav)}>Save</Button>
+                </form>
+            </>
+        }/>
     );
 });
 
